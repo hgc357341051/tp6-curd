@@ -1,11 +1,5 @@
 <?php
-/**
- * File Curd.php
-
- * @Time: 2021/3/4   14:11
- */
-
-namespace xinxinyue\curd\command;
+namespace xiaohu\curd\command;
 
 use think\console\command\Make;
 use think\console\Input;
