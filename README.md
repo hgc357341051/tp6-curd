@@ -1,18 +1,14 @@
-# tp6-curd
-基于thinkphp6框架多应用模式的命令行工具,根据数据表生成对应得增删改查API
+基于thinkphp框架多应用模式的命令行工具,根据数据表生成对应得增删改查API
 
 ## 部署
 
 ### composer安装
->composer require xinxinyue/tp-api-curd
+>composer require xiaohu/htmlcurd
 
 安装完成后会新增配置文件curd.php
 
 ~~~
 <?php
-/**
- * File config.php
- */
 
 return [
     'stub_path'     => false,		//自定义模板路径  复制src/stubs/ 下的模板并修改为自己的模板
@@ -43,11 +39,11 @@ config目录下console.php配置文件新增
 ~~~
 // 指令定义
     'commands' => [
-        'xinxinyue\curd\command\Model',
-        'xinxinyue\curd\command\Validate',
-        'xinxinyue\curd\command\Service',
-        'xinxinyue\curd\command\Controller',
-        'xinxinyue\curd\command\Curd',
+        'xiaohu\curd\command\Model',
+        'xiaohu\curd\command\Validate',
+        'xiaohu\curd\command\Service',
+        'xiaohu\curd\command\Controller',
+        'xiaohu\curd\command\Curd',
     ],
 ~~~
 
