@@ -1,10 +1,4 @@
 <?php
-/**
- * File config.php
-
- * @Time: 2021/3/4   14:01
- */
-
 return [
     'stub_path'     => false,       //模板路径 复制src/stubs/ 下的模板并修改为自己的模板
 
