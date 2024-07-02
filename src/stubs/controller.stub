@@ -6,34 +6,83 @@ namespace {%namespace%};
 use {%serviceNamespace%};
 use think\facade\Request;
 use think\facade\Log;
+use app\BaseController;
+use hg\apidoc\annotation as Apidoc;
 
-class {%className%} {
-
+/**
+ * @Apidoc\Title("{%className%}")
+ * @Apidoc\Group("yewu")
+ * @Apidoc\Sort(8)
+ */
+ 
+class {%className%} extends BaseController{
+    
+     /**
+    * 默认地址
+    */
+     public function index()
+    {
+        return json(['code' => 404,'msg' => '页面错误！请稍后再试～'], 404);
+    }
+    
+    /**
+    * 访问错误处理
+    */
+    public function __call($name, $arguments)
+    {
+        return json(['code' => 404,'msg' => '页面错误！请稍后再试～'], 404);
+    }
+    
+    /**
+     * @Apidoc\Title("查看")
+     * @Apidoc\Method ("GET")
+     * @Apidoc\Author ("二人帮科技")
+     * @Apidoc\Url ("/{%appName%}/{%className%}/read")
+     * @Apidoc\Query("id", type="int",require=true, desc="主键ID",default="1")
+     * @Apidoc\Returned(ref="app\{%appName%}\model\{%className%}Model",desc="数据列表",children={@Apidoc\Param ("id",type="int",desc="主键ID",md="必填"),})
+     */
     public function read()
     {
         $id = input('get.id/d');
         $service = new {%service%}();
-        if(!empty($id) && $service->read($id)){
-            return json(['code' => config('curd.response_code.success'), 'msg' => '', 'data' => $service->_data]);
+        $where[]=['id','=',$id];
+        if(!empty($id) && $service->read($where)){
+            return json(['code' => 200, 'msg' => 'ok', 'data' => $service->_data]);
         }else{
-            return json(['code' => config('curd.response_code.validate_error'), 'msg' => '信息不存在']);
+            return json(['code' => 404, 'msg' => '信息不存在']);
         }
     }
-
+     /**
+     * @Apidoc\Title("列表")
+     * @Apidoc\Method ("GET")
+     * @Apidoc\Author ("二人帮科技")
+     * @Apidoc\Url ("/{%appName%}/{%className%}/getList")
+     * @Apidoc\Query("page", type="int", desc="查询页数",default="1")
+     * @Apidoc\Query("limit", type="int",desc="查询条数",default="10")
+     * @Apidoc\Returned(ref="app\{%appName%}\model\{%className%}Model",desc="数据列表")
+     */
     public function getList()
     {
         $service = new {%service%}();
-        $page = input('get.page/d', 1);
-        $limit = input('get.limit/d', 10);
-        if($service->getList($page, $limit)){
-            return json(['code' => config('curd.response_code.success'), 'msg' => '', 'data' => $service->_data]);
+        $param  = $this->request->only(['page' => 1, 'limit' => 10]);
+        $where =[];
+        if($service->getList($param['page'], $param['limit'],null,$where)){
+            $service->_data['code'] = 200;
+            $service->_data['msg'] = 'ok';
+            return json($service->_data);
         }else{
-            return json(['code' => config('curd.response_code.validate_error'), 'msg' => $service->_error]);
+            return json(['code' => 404, 'msg' => $service->_error]);
         }
 
     }
-
-    public function create()
+    /**
+     * @Apidoc\Title("新增")
+     * @Apidoc\Method ("POST")
+     * @Apidoc\Author ("二人帮科技")
+     * @Apidoc\Url ("/{%appName%}/{%className%}/add")
+     * @Apidoc\Param(ref="app\{%appName%}\model\{%className%}Model",desc="数据列表",withoutField="id,create_time,update_time,delete_time")
+     */
+    public function add()
     {
         if (Request::isPost()){
             $service = new {%service%}();
@@ -43,40 +92,52 @@ class {%className%} {
                 Log::write($service->_error,'notice');
                 return json(['code' => $service->_code, 'msg' => $service->_error]);
             }
-            return json(['code' => config('curd.response_code.success'), 'msg' => '']);
+            return json(['code' => 200, 'msg' => 'ok']);
         }else
-            return json(['code' => config('curd.response_code.method_error'), 'msg' => '请求方式错误']);
+            return json(['code' => 404, 'msg' => '非法操作']);
     }
-
-    public function update()
+     /**
+     * @Apidoc\Title("编辑")
+     * @Apidoc\Method ("POST")
+     * @Apidoc\Author ("二人帮科技")
+     * @Apidoc\Url ("/{%appName%}/{%className%}/edit")
+     * @Apidoc\Param(ref="app\{%appName%}\model\{%className%}Model",desc="数据列表",withoutField="create_time,update_time,delete_time")
+     */
+    public function edit()
     {
         if (Request::isPost()){
             $service = new {%service%}();
             $data = input('post.');
-            if(!$service->update($data)){
+            $where=[];
+            if(!$service->update($data,$where)){
                 Log::write($service->_error,'notice');
                 return json(['code' => $service->_code, 'msg' => $service->_error]);
             }
-            //事件监听
-            return json(['code' => config('curd.response_code.success'), 'msg' => '']);
+            return json(['code' => 200, 'msg' => 'ok']);
         }else
-            return json(['code' => config('curd.response_code.method_error'), 'msg' => '请求方式错误']);
+            return json(['code' => 404, 'msg' => '非法操作']);
 
     }
-
-    public function delete()
+    /**
+     * @Apidoc\Title("删除")
+     * @Apidoc\Method ("POST")
+     * @Apidoc\Author ("二人帮科技")
+     * @Apidoc\Url ("/{%appName%}/{%className%}/del")
+     * @Apidoc\Param("id", type="int",require=true, desc="主键ID",default="1")
+     */
+    public function del()
     {
         $id = input('id/d');
         if(empty($id)){
-            return json(['code' => config('curd.response_code.validate_error'), 'msg' => 'id不存在']);
+            return json(['code' => 404, 'msg' => 'id不存在']);
         }
 
         $service = new {%service%}();
-        if($service->delete($id)){
-            //事件监听
-            return json(['code' => config('curd.response_code.success'), 'msg' => '']);
+        $where[] = ['id','=',$id];
+        if($service->delete($where)){
+            return json(['code' => 200, 'msg' => 'ok']);
         }else{
-            return json(['code' => config('curd.response_code.validate_error'), 'msg' => '删除失败']);
+            return json(['code' => 404, 'msg' => '删除失败']);
         }
     }
 
