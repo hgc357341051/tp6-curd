@@ -1,5 +1,5 @@
 <?php
-namespace xinxinyue\curd\command;
+namespace xiaohu\curd\command;
 
 use think\console\command\Make;
 use think\console\input\Argument;
