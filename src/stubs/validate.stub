@@ -22,7 +22,29 @@ class {%className%} extends Validate
     protected $message = [
 {%message%}
     ];
-
+    
+    /**
+     * 创建(指定规则修改)
+     * only	场景需要验证的字段
+     * remove	移除场景中的字段的部分验证规则  remove('field', ['rule1','rule2'])
+     * append	给场景中的字段需要追加验证规则
+     */
+    public function sceneCreate()
+    {
+        // return $this->remove('id', 'require')->append('title', 'require');
+    }
+    
+    /**
+     * 更新(指定规则修)
+     * only	场景需要验证的字段
+     * remove	移除场景中的字段的部分验证规则  remove('field', ['rule1','rule2'])
+     * append	给场景中的字段需要追加验证规则
+     */
+    public function sceneUpdate()
+    {
+        // return $this->remove('id', 'require')->append('title', 'require');
+            
+    } 
     /**
      * 验证场景
      * @var array
