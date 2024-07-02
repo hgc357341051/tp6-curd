@@ -1,16 +1,4 @@
 <?php
-/**
- * File service.php
- * @author: xinxinyue
- * @Time: 2021/3/4   14:04
- */
-
-/**
- * File model.php
- * @author: xinxinyue
- * @Time: 2021/3/11   16:16
- */
-
 namespace xinxinyue\curd\command;
 
 use think\console\command\Make;
@@ -65,6 +53,7 @@ class Controller extends Make
 
         $event = '';
         $search = [
+            '{%appName%}',
             '{%className%}',
             '{%namespace%}',
             '{%serviceNamespace%}',
@@ -72,6 +61,7 @@ class Controller extends Make
         ];
         $serviceArr = explode('\\',$service);
         $replace = [
+           explode('@', $this->input->getArgument('name'))[0],
             $class,
             $namespace,
             $service,
