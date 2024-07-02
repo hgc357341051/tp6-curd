@@ -24,10 +24,10 @@ class Curd extends Make
     protected function configure()
     {
         $this->setName('make:curd')
-            ->addArgument('name', Argument::REQUIRED, 'Please input your class name')
-            ->addArgument('tableName', Argument::REQUIRED, 'Please input your table name')
+            ->addArgument('name', Argument::REQUIRED, '请输入您的类名')
+            ->addArgument('tableName', Argument::REQUIRED, '请输入您的表名')
             ->addOption('require', null, Option::VALUE_REQUIRED, 'Please input your require name')
-            ->setDescription('Creat a new curd class');
+            ->setDescription('创建一个新的自定义类');
     }
 
     public function execute(Input $input, Output $output)
