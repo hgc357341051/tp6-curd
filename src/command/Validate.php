@@ -1,17 +1,5 @@
 <?php
-/**
- * File validate.php
- * @author: xinxinyue
- * @Time: 2021/3/4   14:04
- */
-
-/**
- * File model.php
- * @author: xinxinyue
- * @Time: 2021/3/4   14:04
- */
-
-namespace xinxinyue\curd\command;
+namespace xiaohu\curd\command;
 
 use think\console\command\Make;
 use think\console\input\Argument;
