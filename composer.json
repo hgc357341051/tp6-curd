@@ -1,18 +1,18 @@
 {
-    "name": "xinxinyue/tp-api-curd",
-    "description": "thinkphp6.0 curd api",
+    "name": "xiaohu/htmlcurd",
+    "description": "小胡专用htmlcurd",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "xinxinyue",
-            "email": "546854479@qq.com"
+            "name": "xiaohu",
+            "email": "357341051@qq.com"
         }
     ],
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0",
-        "topthink/framework": "^6.0.0"
+        "topthink/framework": "^6.0|^8.0"
     },
     "extra": {
         "think": {
@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "xinxinyue\\curd\\": "src/"
+            "xiaohu\\curd\\": "src/"
         }
     }
 }
