@@ -12,7 +12,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0",
-        "topthink/framework": "^6.0|^8.0"
+        "topthink/framework": "^6.0|^8.0|*"
     },
     "extra": {
         "think": {
