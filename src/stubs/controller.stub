@@ -8,6 +8,8 @@ use think\facade\Request;
 use think\facade\Log;
 use app\BaseController;
 use hg\apidoc\annotation as Apidoc;
+use \ba\AuthList;
+#[AuthList(auth: ['getList','add','edit','del','read'],log:['add','edit','del'])]
 
 /**
  * @Apidoc\Title("{%className%}")
